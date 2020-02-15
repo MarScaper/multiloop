@@ -37,21 +37,12 @@ MultiLoop::MultiLoop()
 
 void MultiLoop::dispatch(bool reset)
 {
-  unsigned long time = millis();
-  
-  if( reset)
-  {
-    _loopIndex = 0;
-  }
   
   for(_loopIndex = 0; _loopIndex<_loopCount; _loopIndex++)
   {
-    LoopStruct *loop = &_loopArray[_loopIndex];
+    unsigned long time = millis();
     
-    if( reset )
-    {
-      loop->launched = false;;
-    }
+    LoopStruct *loop = &_loopArray[_loopIndex];
 
     if( loop->launched == false )
     {
@@ -72,10 +63,8 @@ void MultiLoop::delay(unsigned long aDelay)
 {
   uint8_t loopIndex = _loopIndex;
   {
-    LoopStruct *loop = &_loopArray[_loopIndex];
-    
     unsigned long internalDelay =  millis()+aDelay;
-    
+
     do
     {
       dispatch();
@@ -93,22 +82,33 @@ bool MultiLoop::addLoop(callback_void_t callback,unsigned long fireDelay,unsigne
   {
     LoopStruct *loop = &_loopArray[_loopCount];
     
-    if( fireDelay )
-    {
-      loop->fireDelay = fireDelay;
-      loop->startTime = millis()+launchDelay;
-    }
-    else
-    {
-      loop->fireDelay = 0;
-      loop->startTime = 0;
-    }
-    
+    loop->fireDelay = fireDelay;
+    loop->startTime = millis()+launchDelay;
     loop->callback  = callback;
 
     _loopCount++;
     
     res = true;
+  }
+  
+  return res;
+}
+
+bool MultiLoop::changeLoopDelay(callback_void_t callback, unsigned long fireDelay)
+{
+  bool res = false;
+  
+  for(uint8_t loopIndex = 0; loopIndex<_loopCount; loopIndex++)
+  {
+    LoopStruct *loop = &_loopArray[loopIndex];
+    
+    if( loop->callback == callback )
+    {
+      loop->fireDelay = fireDelay;
+      res = true;
+      
+      break;
+    }
   }
   
   return res;

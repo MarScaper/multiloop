@@ -67,6 +67,9 @@ public:
   // Add loop to the MultiLoop class. It'll be automatically called by dispach().
   bool addLoop(callback_void_t callback,unsigned long fireDelay=0,unsigned long launchDelay=0);
   
+  // Change dynamically the delay of a loop
+  bool changeLoopDelay(callback_void_t callback, unsigned long fireDelay);
+               
 private:
   
   uint8_t _loopCount = 0;
