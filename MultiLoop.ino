@@ -17,8 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <Servo.h>
-Servo servo; 
 
 #include "MultiLoop.hpp"
 
@@ -28,8 +26,6 @@ static void loop2();
 
 // MultiLoop instance
 MultiLoop multiLoop = MultiLoop();
-
-
 
 
 // Arduino setup function:
@@ -48,8 +44,6 @@ void setup()
 
   // Run loop2 as kickly as possible
   multiLoop.addLoop(loop2);
-
-  servo.attach(9); 
 }
 
 // Arduino loop function:
@@ -61,27 +55,10 @@ void loop()
   multiLoop.dispatch();
 }
 
-
-
 void loop1()
 {
-  int pos = 0;
-  
-  for (pos = 0; pos <= 90; pos += 1) 
-  {
-    servo.write(map(pos,0,90,68,168));
-
-    multiLoop.delay(10);   
-  }
-
-  multiLoop.delay(200);
-
-  for (pos = 90; pos >= 0; pos -= 1) 
-  { 
-    servo.write(map(pos,0,90,68,168));
-
-    multiLoop.delay(10);                      
-  }
+  Serial.print(millis());
+  Serial.println("[LOOP 1]: Welcome in loop1!");
 }
 
 void loop2()

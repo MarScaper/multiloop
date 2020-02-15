@@ -76,10 +76,6 @@ void MultiLoop::delay(unsigned long aDelay)
     
     unsigned long internalDelay =  millis()+aDelay;
     
-   /* Serial.println(loopIndex);
-    Serial.println(" -> ");
-    Serial.println(_loopArray[loopIndex].internalDelay);*/
-    
     do
     {
       dispatch();
