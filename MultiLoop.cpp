@@ -35,16 +35,20 @@ MultiLoop::MultiLoop()
   _loopIndex = 0;
 }
 
-void MultiLoop::dispatch(bool reset)
+void MultiLoop::dispatch()
 {
+  dispatch(false);
+}
+
+void MultiLoop::dispatch(bool single)
+{
+  unsigned long time = millis();
   
   for(_loopIndex = 0; _loopIndex<_loopCount; _loopIndex++)
   {
-    unsigned long time = millis();
-    
     LoopStruct *loop = &_loopArray[_loopIndex];
 
-    if( loop->launched == false )
+    if( loop->callback && loop->launched == false )
     {
       if( time >= loop->startTime+loop->fireDelay )
       {
@@ -54,6 +58,9 @@ void MultiLoop::dispatch(bool reset)
           loop->callback();
         }
         loop->launched = false;
+        
+        if( single )
+          return;
       }
     }
   }
@@ -67,7 +74,7 @@ void MultiLoop::delay(unsigned long aDelay)
 
     do
     {
-      dispatch();
+      dispatch(true);
       
     } while(millis() < internalDelay);
   }
@@ -105,8 +112,8 @@ bool MultiLoop::changeLoopDelay(callback_void_t callback, unsigned long fireDela
     if( loop->callback == callback )
     {
       loop->fireDelay = fireDelay;
-      res = true;
       
+      res = true;
       break;
     }
   }

@@ -59,7 +59,7 @@ public:
   MultiLoop();
   
   // Dispatch must be called in loop() function.
-  void dispatch(bool reset=false);
+  void dispatch();
   
   // Do not use C delay() function anymore. Use this one for non-blocking purpose.
   void delay(unsigned long aDelay);
@@ -75,6 +75,8 @@ private:
   uint8_t _loopCount = 0;
   uint8_t _loopIndex = 0;
   LoopStruct _loopArray[MAX_LOOPS];
+  
+  void dispatch(bool single);
 };
 
 #endif
