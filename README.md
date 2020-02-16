@@ -80,7 +80,7 @@ Console feedback:
 4000    loop0
 4250                    loop2
 4500            loop1
-
+...
 ```
 
 ## Video tutorial (French)...
