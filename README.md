@@ -21,6 +21,9 @@ void setup()
 {
   Serial.begin(9600);
   
+  // Exectute loop0 as fast as possible
+  multiLoop.addLoop(loop0);
+  
   // Exectute loop1 every 500ms
   multiLoop.addLoop(loop1,500);
   
@@ -33,17 +36,51 @@ void loop()
   multiLoop.dispatch();
 }
 
+void loop0()
+{
+  Serial.print(millis());
+  Serial.println("\tloop0");
+  
+  // Non blocking delay
+  multiLoop.delay(2000);
+}
+
 void loop1()
 {
   Serial.print(millis());
-  Serial.println(" loop1");
+  Serial.println("\t\tloop1");
 }
 
 void loop2()
 {
   Serial.print(millis());
-  Serial.println(" loop2");
+  Serial.println("\t\t\tloop2");
 }
+```
+
+Console feedback:
+```
+0       loop0
+500             loop1
+750                     loop2
+1000            loop1
+1250                    loop2
+1500            loop1
+1750                    loop2
+2000    loop0
+2000            loop1
+2250                    loop2
+2500            loop1
+2750                    loop2
+3000            loop1
+3250                    loop2
+3500            loop1
+3750                    loop2
+4000            loop1
+4000    loop0
+4250                    loop2
+4500            loop1
+
 ```
 
 ## Video tutorial (French)...
