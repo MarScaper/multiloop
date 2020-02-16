@@ -1,7 +1,5 @@
-# multiloop
+# multiloop // BETA RELEASE //
 Create multiple loops easily for pseudo-parallelism with Arduino.
-
-// BETA RELEASE //
 
 ## Code Example
 
