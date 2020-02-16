@@ -21,10 +21,10 @@ void setup()
 {
   Serial.begin(9600);
   
-  // Exectute every 500ms
+  // Exectute loop1 every 500ms
   multiLoop.addLoop(loop1,500);
   
-  // Exectute every 500ms and launch after 250ms
+  // Exectute loop2 every 500ms but launch It after 250ms
   multiLoop.addLoop(loop2,500,250);
 }
 
