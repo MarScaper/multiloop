@@ -21,7 +21,8 @@ void setup()
 {
   Serial.begin(9600);
   
-  multiLoop.addLoop(blink,500);
+  multiLoop.addLoop(loop1,500);
+  multiLoop.addLoop(loop2,500,250);
 }
 
 void loop()
@@ -29,10 +30,16 @@ void loop()
   multiLoop.dispatch();
 }
 
-void blink()
+void loop1()
 {
   Serial.print(millis());
-  Serial.println("blink");
+  Serial.println(" loop1");
+}
+
+void loop2()
+{
+  Serial.print(millis());
+  Serial.println(" loop2");
 }
 ```
 
